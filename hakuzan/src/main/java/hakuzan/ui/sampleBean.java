@@ -2,6 +2,7 @@
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -28,4 +29,11 @@ public class sampleBean implements Serializable{
     public String GetKeyword(){
         return keyword;
     }
+    
+        
+    public void sleep() throws InterruptedException {
+        
+        TimeUnit.SECONDS.sleep(10);
+    }
+    
 }

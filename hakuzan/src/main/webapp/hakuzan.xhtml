@@ -15,8 +15,8 @@
         <div>
             <h:outputText value = "bbbb   #{sampleBean.GetKeyword()}" />
         </div>
-        <div>
-            <p:button value="Submit" />
-        </div>
+        <h:form>
+            <p:commandButton value="Submit" action="#{sampleBean.sleep()}"/>
+        </h:form>
     </body>
 </html>
