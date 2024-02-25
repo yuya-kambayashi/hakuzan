@@ -75,4 +75,9 @@ public class hakuzanBean implements Serializable{
      
 
     }
+    public void outputCode() throws IOException {
+    
+        int a = 0;
+        
+    }
 }
