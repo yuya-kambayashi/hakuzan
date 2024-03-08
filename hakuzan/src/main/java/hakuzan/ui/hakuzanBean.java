@@ -31,14 +31,14 @@ import org.primefaces.model.StreamedContent;
  */
 @Named(value = "hakuzanBean")
 @RequestScoped
-public class hakuzanBean implements Serializable{
+public class HakuzanBean implements Serializable{
      
     private StreamedContent file;
     
     private static ServletContext context 
         = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
-    public hakuzanBean(){
+    public HakuzanBean(){
         
         String fpath = "/resources/data/LCXXXTest.java";
        

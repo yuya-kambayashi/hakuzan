@@ -14,10 +14,10 @@ import org.junit.jupiter.api.BeforeAll;
  *
  * @author kamba
  */
-public class hakuzanBeanTest {
+public class HakuzanBeanTest {
     
     @Inject
-    private hakuzanBean hakuzanBean;
+    private HakuzanBean hakuzanBean;
     
     @Test
     void test_GenerateCode_twosum(){
