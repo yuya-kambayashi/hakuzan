@@ -7,10 +7,13 @@ import jakarta.inject.Named;
 import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,16 +41,8 @@ public class hakuzanBean implements Serializable{
     public hakuzanBean(){
         keyword = "hakuzan";
         
-        //String fpath = "/resources/demo/images/boromir.jpg";
         String fpath = "/resources/data/LCXXXTest.java";
        
-        Path path = Paths.get(context.getRealPath(fpath));
-
-//        file = DefaultStreamedContent.builder()
-//                .name("downloaded_boromir.jpg")
-//                .contentType("image/jpg")
-//                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(fpath))
-//                .build();
         file = DefaultStreamedContent.builder()
                 .name("LCXXXTest_mod.java")
                 .contentType("text/plain")
@@ -105,8 +100,20 @@ public class hakuzanBean implements Serializable{
 
     }
     public void outputCode() throws IOException {
-    
-        int a = 0;
+
+        String fpath = "/resources/data/LCXXXTest.java";
+        
+        String text = "aaaaa";
+
+        Path path = Paths.get(context.getRealPath(fpath));
+        
+        byte[] bytes;
+        try {
+            bytes = text.getBytes("UTF-8");
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            //Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
     public StreamedContent getFile() {
