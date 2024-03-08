@@ -18,10 +18,12 @@
         </div>
         <h:form>
             <p:commandButton value="Generate Code" action="#{hakuzanBean.generateCode()}"/>
-        </h:form>
-        <p:divider />
-        <h:form>
+
             <p:commandButton value="Output Code" action="#{hakuzanBean.outputCode()}"/>
+
+            <p:commandButton value="Ajax Download" icon="pi pi-arrow-down" styleClass="ui-button-outlined">
+                <p:fileDownload value="#{hakuzanBean.file}"/>
+            </p:commandButton>
         </h:form>
     </body>
 </html>

@@ -1,9 +1,14 @@
 package hakuzan.ui;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.jsoup.Jsoup;
@@ -14,17 +19,41 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
  * @author kamba
  */
 @Named(value = "hakuzanBean")
-@ViewScoped
+@RequestScoped
 public class hakuzanBean implements Serializable{
      
+    private StreamedContent file;
+    
+    private static ServletContext context 
+        = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+
     public hakuzanBean(){
         keyword = "hakuzan";
+        
+        //String fpath = "/resources/demo/images/boromir.jpg";
+        String fpath = "/resources/data/LCXXXTest.java";
+       
+        Path path = Paths.get(context.getRealPath(fpath));
+
+//        file = DefaultStreamedContent.builder()
+//                .name("downloaded_boromir.jpg")
+//                .contentType("image/jpg")
+//                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(fpath))
+//                .build();
+        file = DefaultStreamedContent.builder()
+                .name("LCXXXTest_mod.java")
+                .contentType("text/plain")
+                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(fpath))
+                .build();
+        int a = 0;
     }
     
     public String getHoge(){
@@ -78,6 +107,9 @@ public class hakuzanBean implements Serializable{
     public void outputCode() throws IOException {
     
         int a = 0;
-        
+    }
+    
+    public StreamedContent getFile() {
+        return file;
     }
 }
