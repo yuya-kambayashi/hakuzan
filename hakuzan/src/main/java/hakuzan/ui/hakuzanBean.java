@@ -39,7 +39,6 @@ public class hakuzanBean implements Serializable{
         = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public hakuzanBean(){
-        keyword = "hakuzan";
         
         String fpath = "/resources/data/LCXXXTest.java";
        
@@ -50,31 +49,7 @@ public class hakuzanBean implements Serializable{
                 .build();
         int a = 0;
     }
-    
-    public String getHoge(){
-        return "hakuzan hakuzan";
-    }
-    
-    private final String keyword;
-    public String GetKeyword(){
-        return keyword;
-    }
-    
-        
-    public void generateCodeJsoup() throws IOException {
-        
-        Document doc = Jsoup.connect("https://en.wikipedia.org/").get();
-        Elements newsHeadlines = doc.select("#mp-itn b a");
-        for (Element headline : newsHeadlines) {
-          String s = 
-            headline.attr("title");
-          String s2 = headline.absUrl("href");
-          
-          int a  = 0;
-        }
 
-    }
-    
     public String generateCode() throws IOException {
         
         WebDriver driver = new ChromeDriver();
@@ -97,7 +72,7 @@ public class hakuzanBean implements Serializable{
         
         
      
-        return "aaa";
+        return "aaaa";
 
     }
     public void outputCode() throws IOException {

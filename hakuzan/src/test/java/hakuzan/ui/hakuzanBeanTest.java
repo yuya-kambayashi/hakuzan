@@ -20,7 +20,7 @@ public class hakuzanBeanTest {
     private hakuzanBean hakuzanBean;
     
     @Test
-    void GenerateCode_twosum(){
+    void test_GenerateCode_twosum(){
        
         try{
             var actual = hakuzanBean.generateCode();
@@ -29,6 +29,7 @@ public class hakuzanBeanTest {
             assertThat(actual).isEqualTo(expected);
         }
         catch(Exception ex){
+            int a = 0;
         }
 
     }
