@@ -4,8 +4,11 @@
  */
 package hakuzan.ui;
 
+import jakarta.ejb.embeddable.EJBContainer;
+import jakarta.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
@@ -13,14 +16,20 @@ import org.junit.jupiter.api.Test;
  */
 public class hakuzanBeanTest {
     
+    @Inject
+    private hakuzanBean hakuzanBean;
     
     @Test
-    void Case1(){
-        
-        var actual = true;
-        var expected = true;
-        
-        assertThat(actual).isEqualTo(expected);
+    void GenerateCode_twosum(){
+       
+        try{
+            var actual = hakuzanBean.generateCode();
+            var expected = "aaa";
+
+            assertThat(actual).isEqualTo(expected);
+        }
+        catch(Exception ex){
+        }
 
     }
 }

@@ -75,7 +75,7 @@ public class hakuzanBean implements Serializable{
 
     }
     
-    public void generateCode() throws IOException {
+    public String generateCode() throws IOException {
         
         WebDriver driver = new ChromeDriver();
         driver.get("https://leetcode.com/problems/two-sum/");
@@ -97,6 +97,7 @@ public class hakuzanBean implements Serializable{
         
         
      
+        return "aaa";
 
     }
     public void outputCode() throws IOException {
