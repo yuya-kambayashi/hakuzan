@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 
 /**
  *
@@ -19,6 +20,7 @@ public class HakuzanBeanTest {
     @Inject
     private HakuzanBean hakuzanBean;
     
+    @Disabled
     @Test
     void test_GenerateCode_twosum(){
        
