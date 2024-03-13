@@ -29,17 +29,17 @@ public class HakuzanBean implements Serializable{
     @Getter
     private StreamedContent file;
     
+    private final String TEMPLATE_FILE_PATH = "/resources/data/LCXXXTest.java";
+    
     private static ServletContext context 
         = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public HakuzanBean(){
-        
-        String fpath = "/resources/data/LCXXXTest.java";
-       
+             
         file = DefaultStreamedContent.builder()
                 .name("LCXXXTest_mod.java")
                 .contentType("text/plain")
-                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(fpath))
+                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(TEMPLATE_FILE_PATH))
                 .build();
     }
 
@@ -65,16 +65,16 @@ public class HakuzanBean implements Serializable{
         
         
      
-        return "aaaa";
+        return "bbbb";
 
     }
     public void outputCode() throws IOException {
-
-        String fpath = "/resources/data/LCXXXTest.java";
         
-        String text = "aaaaa";
-
-        Path path = Paths.get(context.getRealPath(fpath));
+        // 書き込み文字列の生成
+        String text =  generateCode();
+        
+        // 出力ファイルへの書き込み       
+        Path path = Paths.get(context.getRealPath(TEMPLATE_FILE_PATH));
         
         byte[] bytes;
         try {
