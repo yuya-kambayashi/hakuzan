@@ -24,6 +24,8 @@ public class HakuzanBeanTest {
     @Test
     void test_GenerateCode_twosum(){
        
+        assertThat(hakuzanBean).isNotNull();
+        
         try{
             var actual = hakuzanBean.generateCode();
             var expected = "aaa";
