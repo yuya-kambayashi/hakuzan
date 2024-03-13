@@ -9,8 +9,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <h:form>
-            <p:commandButton value="Output Code" action="#{hakuzanBean.outputCode()}">
+        <h:form id="frm">
+            <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanBean.outputCode()}">
                 <p:fileDownload value="#{hakuzanBean.file}"/>
             </p:commandButton>
         </h:form>

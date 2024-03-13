@@ -10,6 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 /**
  *
@@ -35,6 +38,22 @@ public class HakuzanBeanTest {
         catch(Exception ex){
             int a = 0;
         }
+
+    }
+    @Test
+    void test_GenerateCode(){
+       
+        WebDriver driver = new ChromeDriver();
+        driver.get("http://localhost:8080/hakuzan");
+        
+        var element = driver.findElement(By.id("frm:btnOutputCode"));
+                
+        assertThat(element.getText()).isEqualTo("Output Code");
+
+        //element.click();
+        
+        
+        driver.quit();
 
     }
 }
