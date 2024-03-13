@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lombok.Getter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,6 +34,7 @@ import org.primefaces.model.StreamedContent;
 @RequestScoped
 public class HakuzanBean implements Serializable{
      
+    @Getter
     private StreamedContent file;
     
     private static ServletContext context 
@@ -47,7 +49,6 @@ public class HakuzanBean implements Serializable{
                 .contentType("text/plain")
                 .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(fpath))
                 .build();
-        int a = 0;
     }
 
     public String generateCode() throws IOException {
@@ -91,8 +92,5 @@ public class HakuzanBean implements Serializable{
             //Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
-    public StreamedContent getFile() {
-        return file;
-    }
+   
 }
