@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import lombok.Getter;
+import lombok.Setter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,13 +30,20 @@ public class HakuzanBean implements Serializable{
     @Getter
     private StreamedContent file;
     
+    @Getter
+    @Setter
+    private String file2;
+
     private final String TEMPLATE_FILE_PATH = "/resources/data/LCXXXTest.java";
     
     private static ServletContext context 
         = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public HakuzanBean(){
-             
+        file2 = "Hoge";
+         
+        // Primefaces.FileDownloadを参考
+        // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
         file = DefaultStreamedContent.builder()
                 .name("LCXXXTest_mod.java")
                 .contentType("text/plain")
@@ -65,7 +73,7 @@ public class HakuzanBean implements Serializable{
         
         
      
-        return "bbbb";
+        return file2;
 
     }
     public void outputCode() throws IOException {

@@ -10,6 +10,8 @@
     </h:head>
     <body>
         <h:form id="frm">
+            <p:outputLabel value="Leetcode url:"/>
+            <p:inputText value="#{hakuzanBean.file2}"/>
             <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanBean.outputCode()}">
                 <p:fileDownload value="#{hakuzanBean.file}"/>
             </p:commandButton>
