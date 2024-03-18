@@ -32,7 +32,7 @@ public class HakuzanBean implements Serializable{
     
     @Getter
     @Setter
-    private String file2;
+    private String url;
 
     private final String TEMPLATE_FILE_PATH = "/resources/data/LCXXXTest.java";
     
@@ -40,7 +40,6 @@ public class HakuzanBean implements Serializable{
         = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public HakuzanBean(){
-        file2 = "Hoge";
          
         // Primefaces.FileDownloadを参考
         // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
@@ -73,7 +72,7 @@ public class HakuzanBean implements Serializable{
         
         
      
-        return file2;
+        return url;
 
     }
     public void outputCode() throws IOException {

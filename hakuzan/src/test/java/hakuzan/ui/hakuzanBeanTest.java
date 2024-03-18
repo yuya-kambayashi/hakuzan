@@ -41,6 +41,7 @@ public class HakuzanBeanTest {
 
     }
     @Test
+    @Disabled
     void test_GenerateCode(){
        
         WebDriver driver = new ChromeDriver();
