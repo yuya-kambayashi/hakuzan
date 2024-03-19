@@ -3,15 +3,32 @@ package hakuzan.ui;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
+import jakarta.json.Json;
+import static jakarta.json.Json.createObjectBuilder;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonValue;
 import jakarta.servlet.ServletContext;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Properties;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -52,25 +69,68 @@ public class HakuzanBean implements Serializable{
 
     public String generateCode() throws IOException {
         
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://leetcode.com/problems/two-sum/");
-        
-        String t = driver.getTitle();
-        
+        // urlよりソースコードの各要素を取得する
+        String fileName = "/WEB-INF/classes/gpt.properties";
+        Path path = Paths.get(context.getRealPath(fileName));
 
-        List<WebElement> examples = driver.findElements(By.className("view-lines"));
-        for(var example : examples){
+        Properties conf = new Properties();
+        try {
             
-            String et = example.getText();
-
-            int a = 0;
-
+            conf.load(new FileInputStream(path.toFile()));
+        } catch (IOException e) {
+            System.err.println("Cannot open " + fileName + ".");
+            e.printStackTrace();
+            System.exit(-1);  // プログラム終了
         }
-
-
-        driver.quit();
+        
+        String apiKey = conf.getProperty("apiKey");
+        String endpoint = conf.getProperty("endpoint");
         
         
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(endpoint);
+            httpPost.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey);
+            httpPost.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+
+            JsonObject requestBody = Json.createObjectBuilder()
+                    .add("model", "gpt-3.5-turbo-0125")
+                    .add("response_format", 
+                            Json.createObjectBuilder()
+                                    .add("type", "json_object"))
+                    .add("messages", 
+                            Json.createArrayBuilder().add(
+                                    Json.createObjectBuilder().add("role", "system").add("content", "You are a helpful assistant designed to output JSON."))
+                                    .add(Json.createObjectBuilder().add("role", "user").add("content", "Who is the head coach of la chargers?"))
+                    ).build();
+
+            StringEntity entity = new StringEntity(requestBody.toString());
+            httpPost.setEntity(entity);
+
+            try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+                HttpEntity responseEntity = response.getEntity();
+                if (responseEntity != null) {
+                    String responseBody = EntityUtils.toString(responseEntity);
+                    System.out.println(responseBody);
+                    
+                    JsonReader reader = Json.createReaderFactory(null).createReader(new StringReader(responseBody));
+                    JsonObject jsonObject = reader.readObject();
+
+                    String content = jsonObject.getJsonArray("choices")
+                            .getJsonObject(0)
+                            .getJsonObject("message")
+                            .getString("content");
+
+                    JsonObject innerJsonObject = Json.createReader(new StringReader(content)).readObject();
+                    String headCoach = innerJsonObject.getString("head_coach");
+
+                    System.out.println("Head Coach: " + headCoach);
+                    
+                    return headCoach;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
      
         return url;
 
@@ -91,5 +151,7 @@ public class HakuzanBean implements Serializable{
             //Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-   
+    
+    
 }
+   
