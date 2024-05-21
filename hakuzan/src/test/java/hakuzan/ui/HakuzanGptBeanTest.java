@@ -18,42 +18,40 @@ import org.openqa.selenium.chrome.ChromeDriver;
  *
  * @author kamba
  */
-public class HakuzanBeanTest {
-    
+public class HakuzanGptBeanTest {
+
     @Inject
-    private HakuzanBean hakuzanBean;
-    
+    private HakuzanGptBean hakuzanGptBean;
+
     @Disabled
     @Test
-    void test_GenerateCode_twosum(){
-       
-        assertThat(hakuzanBean).isNotNull();
-        
-        try{
-            var actual = hakuzanBean.generateCode();
+    void test_GenerateCode_twosum() {
+
+        assertThat(hakuzanGptBean).isNotNull();
+
+        try {
+            var actual = hakuzanGptBean.generateCode();
             var expected = "aaa";
 
             assertThat(actual).isEqualTo(expected);
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             int a = 0;
         }
 
     }
+
     @Test
     @Disabled
-    void test_GenerateCode(){
-       
+    void test_GenerateCode() {
+
         WebDriver driver = new ChromeDriver();
         driver.get("http://localhost:8080/hakuzan");
-        
+
         var element = driver.findElement(By.id("frm:btnOutputCode"));
-                
+
         assertThat(element.getText()).isEqualTo("Output Code");
 
         //element.click();
-        
-        
         driver.quit();
 
     }
