@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <h:form id="frmGpt">
+        <h:form id="frmGpt" style="visibility:hidden">
             <p:outputLabel value="Leetcode url:" />
             <p:inputText id="inputUrl" value="#{hakuzanGptBean.url}" style="width:500px" />
             <p:watermark for="inputUrl" value="https://leetcode.com/problems/two-sum/description/" />
@@ -21,6 +21,7 @@
             <p:outputLabel value="Leetcode url:" />
             <p:inputText id="inputUrlS" value="#{hakuzanSeleniumBean.url}" style="width:500px" />
             <p:watermark for="inputUrlS" value="https://leetcode.com/problems/two-sum/description/sss" />
+            <p:inputText id="problem" value="#{hakuzanSeleniumBean.problem}" style="width:100px" />
             <p:commandButton id="btnOutputCodeS" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}">
                 <p:fileDownload value="#{hakuzanSeleniumBean.file}"/>
             </p:commandButton>

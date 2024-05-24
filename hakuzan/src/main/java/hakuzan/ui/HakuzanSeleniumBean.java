@@ -28,6 +28,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -45,26 +48,45 @@ public class HakuzanSeleniumBean {
     @Getter
     @Setter
     private String url;
+    @Getter
+    @Setter
+    private String problem;
 
-    private final String TEMPLATE_FILE_PATH = "/resources/data/LCXXXTest.java";
+    private final String TEMPLATE_FILE_PATH = "/resources/data/AtCoderTemplate.txt";
+    private final String COPIED_FILE_PATH = "/resources/data/AtCoderOutput.txt";
+    private final String OUTPUT_FILE_PATH = "/resources/data/AtCoderOutput.java";
 
     private static ServletContext context
             = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public HakuzanSeleniumBean() {
 
+        String outputFileName = problem + ".java";
+
         // Primefaces.FileDownloadを参考
         // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
         file = DefaultStreamedContent.builder()
-                .name("LCXXXTest_mod.java")
+                .name("copied.txt")
                 .contentType("text/plain")
-                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(TEMPLATE_FILE_PATH))
+                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(OUTPUT_FILE_PATH))
                 .build();
     }
 
     public String generateCode() throws IOException {
+//        WebDriver driver = new ChromeDriver();
+//        driver.get("https://atcoder.jp/contests/abc354/tasks/abc354_c");
+//
+//        var element1 = driver.findElement(By.id("pre-sample0"));
+//        var element2 = driver.findElement(By.id("pre-sample1"));
+//        var element3 = driver.findElement(By.id("pre-sample2"));
+//        var element4 = driver.findElement(By.id("pre-sample3"));
+//        var t4 = element4.getText();
+//        driver.quit();
+        Path templatePath = Paths.get(context.getRealPath(TEMPLATE_FILE_PATH));
+        String text = Files.readString(templatePath);
+        text = text.replaceAll("XXX", "ABC355");
 
-        return url;
+        return text;
 
     }
 
@@ -74,13 +96,14 @@ public class HakuzanSeleniumBean {
         String text = generateCode();
 
         // 出力ファイルへの書き込み       
-        Path path = Paths.get(context.getRealPath(TEMPLATE_FILE_PATH));
+        Path path = Paths.get(context.getRealPath(OUTPUT_FILE_PATH));
 
-        byte[] bytes;
         try {
-            bytes = text.getBytes("UTF-8");
+            byte[] bytes = text.getBytes("UTF-8");
             Files.write(path, bytes);
         } catch (IOException e) {
+
+            int a = 0;
             //Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, e);
         }
     }
