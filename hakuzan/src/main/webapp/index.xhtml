@@ -19,8 +19,7 @@
         </h:form>
         <h:form id="frmSelenium">
             <p:outputLabel value="Leetcode url:" />
-            <p:inputText id="inputUrlS" value="#{hakuzanSeleniumBean.url}" style="width:500px" />
-            <p:watermark for="inputUrlS" value="https://leetcode.com/problems/two-sum/description/sss" />
+            <p:inputText id="contest" value="#{hakuzanSeleniumBean.contest}" style="width:100px" />
             <p:inputText id="problem" value="#{hakuzanSeleniumBean.problem}" style="width:100px" />
             <p:commandButton id="btnOutputCodeS" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}">
                 <p:fileDownload value="#{hakuzanSeleniumBean.file}"/>

@@ -51,11 +51,11 @@ public class XXX {
     public void Case1() {
 
         String input = """
-                       
+                       IN1
                     """;
 
         String expected = """
-                          
+                          OUT1
                           """;
         Stream.of(input.split("\\n")).map(s -> s.trim()).forEach(s -> in.inputln(s));
         XXX.main(null);
@@ -66,11 +66,11 @@ public class XXX {
     public void Case2() {
 
         String input = """
-                       
+                       IN2
                     """;
 
         String expected = """
-                          
+                          OUT2
                           """;
         Stream.of(input.split("\\n")).map(s -> s.trim()).forEach(s -> in.inputln(s));
         XXX.main(null);
@@ -81,11 +81,11 @@ public class XXX {
     public void Case3() {
 
         String input = """
-                       
+                       IN3
                     """;
 
         String expected = """
-                          
+                          OUT3
                           """;
         Stream.of(input.split("\\n")).map(s -> s.trim()).forEach(s -> in.inputln(s));
         XXX.main(null);

@@ -47,7 +47,7 @@ public class HakuzanSeleniumBean {
 
     @Getter
     @Setter
-    private String url;
+    private String contest;
     @Getter
     @Setter
     private String problem;
@@ -61,7 +61,8 @@ public class HakuzanSeleniumBean {
 
     public HakuzanSeleniumBean() {
 
-        String outputFileName = problem + ".java";
+        contest = "ABC";
+        problem = "C";
 
         // Primefaces.FileDownloadを参考
         // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
@@ -73,19 +74,40 @@ public class HakuzanSeleniumBean {
     }
 
     public String generateCode() throws IOException {
-//        WebDriver driver = new ChromeDriver();
-//        driver.get("https://atcoder.jp/contests/abc354/tasks/abc354_c");
-//
-//        var element1 = driver.findElement(By.id("pre-sample0"));
-//        var element2 = driver.findElement(By.id("pre-sample1"));
-//        var element3 = driver.findElement(By.id("pre-sample2"));
-//        var element4 = driver.findElement(By.id("pre-sample3"));
-//        var t4 = element4.getText();
-//        driver.quit();
+
+        // テンプレートを読み込む
         Path templatePath = Paths.get(context.getRealPath(TEMPLATE_FILE_PATH));
         String text = Files.readString(templatePath);
-        text = text.replaceAll("XXX", "ABC355");
 
+        // クラス名の置換
+        String problemName = contest + problem;
+        problemName = problemName.toUpperCase();
+        text = text.replaceAll("XXX", problemName);
+
+        // テストケースの置換
+        String url = "https://atcoder.jp/contests/";
+        url += contest.toLowerCase() + "/tasks/" + contest.toLowerCase() + "_" + problem.toLowerCase();
+
+        WebDriver driver = new ChromeDriver();
+        driver.get(url);
+
+        var input1 = driver.findElement(By.id("pre-sample0")).getText();
+        var output1 = driver.findElement(By.id("pre-sample1")).getText();
+        text = text.replaceAll("IN1", input1);
+        text = text.replaceAll("OUT1", output1);
+
+        var input2 = driver.findElement(By.id("pre-sample2")).getText();
+        var output2 = driver.findElement(By.id("pre-sample3")).getText();
+        text = text.replaceAll("IN2", input2);
+        text = text.replaceAll("OUT2", output2);
+
+        var input3 = driver.findElement(By.id("pre-sample4")).getText();
+        var output3 = driver.findElement(By.id("pre-sample5")).getText();
+        // テストケース3がない場合もテンプレートに埋め込んだキーワードを削除する意味合いで置換する
+        text = text.replaceAll("IN3", input3);
+        text = text.replaceAll("OUT3", output3);
+
+        driver.quit();
         return text;
 
     }
