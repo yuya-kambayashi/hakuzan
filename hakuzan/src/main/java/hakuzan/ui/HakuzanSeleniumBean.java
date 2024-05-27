@@ -5,29 +5,16 @@
 package hakuzan.ui;
 
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
 import jakarta.servlet.ServletContext;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -51,9 +38,11 @@ public class HakuzanSeleniumBean {
     @Getter
     @Setter
     private String problem;
+    @Getter
+    @Setter
+    private String text;
 
     private final String TEMPLATE_FILE_PATH = "/resources/data/AtCoderTemplate.txt";
-    private final String COPIED_FILE_PATH = "/resources/data/AtCoderOutput.txt";
     private final String OUTPUT_FILE_PATH = "/resources/data/AtCoderOutput.java";
 
     private static ServletContext context
@@ -67,55 +56,66 @@ public class HakuzanSeleniumBean {
         // Primefaces.FileDownloadを参考
         // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
         file = DefaultStreamedContent.builder()
-                .name("copied.txt")
+                .name("output.txt")
                 .contentType("text/plain")
                 .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(OUTPUT_FILE_PATH))
                 .build();
     }
 
     public String generateCode() throws IOException {
-
-        // テンプレートを読み込む
-        Path templatePath = Paths.get(context.getRealPath(TEMPLATE_FILE_PATH));
-        String text = Files.readString(templatePath);
-
-        // クラス名の置換
-        String problemName = contest + problem;
-        problemName = problemName.toUpperCase();
-        text = text.replaceAll("XXX", problemName);
-
-        // テストケースの置換
-        String url = "https://atcoder.jp/contests/";
-        url += contest.toLowerCase() + "/tasks/" + contest.toLowerCase() + "_" + problem.toLowerCase();
-
         WebDriver driver = new ChromeDriver();
-        driver.get(url);
 
-        var input1 = driver.findElement(By.id("pre-sample0")).getText();
-        var output1 = driver.findElement(By.id("pre-sample1")).getText();
-        text = text.replaceAll("IN1", input1);
-        text = text.replaceAll("OUT1", output1);
+        try {
+            // テンプレートを読み込む
+            Path templatePath = Paths.get(context.getRealPath(TEMPLATE_FILE_PATH));
+            String text = Files.readString(templatePath);
 
-        var input2 = driver.findElement(By.id("pre-sample2")).getText();
-        var output2 = driver.findElement(By.id("pre-sample3")).getText();
-        text = text.replaceAll("IN2", input2);
-        text = text.replaceAll("OUT2", output2);
+            // クラス名の置換
+            String problemName = contest + problem;
+            problemName = problemName.toUpperCase();
+            text = text.replaceAll("XXX", problemName);
 
-        var input3 = driver.findElement(By.id("pre-sample4")).getText();
-        var output3 = driver.findElement(By.id("pre-sample5")).getText();
-        // テストケース3がない場合もテンプレートに埋め込んだキーワードを削除する意味合いで置換する
-        text = text.replaceAll("IN3", input3);
-        text = text.replaceAll("OUT3", output3);
+            // テストケースの置換
+            String url = "https://atcoder.jp/contests/";
+            url += contest.toLowerCase() + "/tasks/" + contest.toLowerCase() + "_" + problem.toLowerCase();
 
-        driver.quit();
-        return text;
+            driver.get(url);
 
+            var input1 = driver.findElement(By.id("pre-sample0")).getText();
+            var output1 = driver.findElement(By.id("pre-sample1")).getText();
+            text = text.replaceAll("IN1", input1);
+            text = text.replaceAll("OUT1", output1);
+
+            var input2 = driver.findElement(By.id("pre-sample2")).getText();
+            var output2 = driver.findElement(By.id("pre-sample3")).getText();
+            text = text.replaceAll("IN2", input2);
+            text = text.replaceAll("OUT2", output2);
+
+            var input3 = driver.findElement(By.id("pre-sample4")).getText();
+            var output3 = driver.findElement(By.id("pre-sample5")).getText();
+            // テストケース3がない場合もテンプレートに埋め込んだキーワードを削除する意味合いで置換する
+            text = text.replaceAll("IN3", input3);
+            text = text.replaceAll("OUT3", output3);
+
+            driver.quit();
+            return text;
+        } catch (Exception e) {
+            error();
+            driver.quit();
+        }
+        return "";
+    }
+
+    public void error() {
+        String msg = "不正なコンテストが指定されています。";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
     }
 
     public void outputCode() throws IOException {
 
         // 書き込み文字列の生成
-        String text = generateCode();
+        text = "";
+        text = generateCode();
 
         // 出力ファイルへの書き込み       
         Path path = Paths.get(context.getRealPath(OUTPUT_FILE_PATH));

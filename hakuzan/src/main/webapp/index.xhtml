@@ -3,27 +3,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
     <h:head>
         <title>hakuzan</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <h:form id="frmGpt" style="visibility:hidden">
-            <p:outputLabel value="Leetcode url:" />
-            <p:inputText id="inputUrl" value="#{hakuzanGptBean.url}" style="width:500px" />
-            <p:watermark for="inputUrl" value="https://leetcode.com/problems/two-sum/description/" />
-            <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanGptBean.outputCode()}">
-                <p:fileDownload value="#{hakuzanGptBean.file}"/>
-            </p:commandButton>
-        </h:form>
-        <h:form id="frmSelenium">
-            <p:outputLabel value="Leetcode url:" />
-            <p:inputText id="contest" value="#{hakuzanSeleniumBean.contest}" style="width:100px" />
-            <p:inputText id="problem" value="#{hakuzanSeleniumBean.problem}" style="width:100px" />
-            <p:commandButton id="btnOutputCodeS" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}">
-                <p:fileDownload value="#{hakuzanSeleniumBean.file}"/>
-            </p:commandButton>
+        <h5>AtCoder Problems Generator</h5>
+        <h:form id="frm">
+            <div>
+                <p:outputLabel value="Contest:" />
+            </div>
+            <div>
+                <p:inputText id="contest" value="#{hakuzanSeleniumBean.contest}" style="width:100px" />
+                <p:inputText id="problem" value="#{hakuzanSeleniumBean.problem}" style="width:100px" />
+                <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}">
+                    <p:fileDownload value="#{hakuzanSeleniumBean.file}" />
+                </p:commandButton>
+            </div>
+            <div>
+                <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
+            </div>
+            <div>   
+                <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:90%">
+                    <p:autoUpdate />
+                </p:inputTextarea>
+            </div>
         </h:form>
     </body>
 </html>
