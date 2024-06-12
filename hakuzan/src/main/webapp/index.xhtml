@@ -43,9 +43,13 @@
                 </h:panelGrid>
             </p:panel>
             <p:panel header="AtCoder Problems Generator" style="margin-bottom: 20px;">
-                <h:panelGrid columns="2" cellpadding="10">
+                <p:panelGrid columns="2"
+                             columnClasses="ui-grid-col-2,ui-grid-col-4"
+                             layout="grid"
+                             styleClass="ui-panelgrid-blank ui-fluid"
+                             style="border:0px none; background-color:transparent;">
                     <h:outputLabel for="contest" value="Contest:" />
-                    <p:inputText id="contest" value="#{hakuzanSeleniumBean.contest}">
+                    <p:inputText id="contest" value="#{hakuzanSeleniumBean.contest} " >
                         <p:ajax event="blur" oncomplete="copyValue2()"/>
                     </p:inputText>
                     <h:outputLabel for="problem" value="Problem:" />
@@ -54,18 +58,19 @@
                     </p:inputText>
                     <h:outputLabel for="url" value="Url:" />
                     <p:inputText id="url" value="#{hakuzanSeleniumBean.url}" />
-                    <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}">
+                    <h:outputLabel for="btnOutputCode" value="" />
+                    <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}" style="width:auto">
                         <p:fileDownload value="#{hakuzanSeleniumBean.file}" />
                     </p:commandButton>
-                    <div>
-                        <p:messages id="messages" showDetail="true" closable="true">
-                            <p:autoUpdate/>
-                        </p:messages>
-                    </div>
-                </h:panelGrid>
-                <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}">
+                </p:panelGrid>
+                <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:100%">
                     <p:autoUpdate />
                 </p:inputTextarea>
+                <div>
+                    <p:messages id="messages" showDetail="true" closable="true">
+                        <p:autoUpdate/>
+                    </p:messages>
+                </div>
             </p:panel>
         </h:form>
     </body>
