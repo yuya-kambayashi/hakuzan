@@ -41,6 +41,15 @@ public class HakuzanSeleniumBean {
     @Getter
     @Setter
     private String text;
+    @Getter
+    @Setter
+    private String url;
+    @Getter
+    @Setter
+    private String sourceValue;
+    @Getter
+    @Setter
+    private String targetValue;
 
     private final String TEMPLATE_FILE_PATH = "/resources/data/AtCoderTemplate.txt";
     private final String OUTPUT_FILE_PATH = "/resources/data/AtCoderOutput.java";
@@ -52,6 +61,9 @@ public class HakuzanSeleniumBean {
 
         contest = "ABC";
         problem = "C";
+
+        url = "https://atcoder.jp/contests/";
+        url += contest.toLowerCase() + "/tasks/" + contest.toLowerCase() + "_" + problem.toLowerCase();
 
         // Primefaces.FileDownloadを参考
         // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
