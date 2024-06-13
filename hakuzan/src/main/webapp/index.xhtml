@@ -27,7 +27,7 @@
     </h:head>
     <body>
         <h:form id="form">
-            <p:panel header="AtCoder Problems Generator" style="margin-bottom: 20px;">
+            <p:panel id="pnl" header="AtCoder Problems Generator" style="margin-bottom: 20px;">
                 <p:panelGrid columns="2"
                              columnClasses="ui-grid-col-2,ui-grid-col-4"
                              layout="grid"
@@ -52,6 +52,7 @@
                     <p:autoUpdate />
                 </p:inputTextarea>
             </p:panel>
+            <p:blockUI block="pnl" trigger="btnOutputCode" widgetVar="blc"/>
             <div>
                 <p:messages id="messages" showDetail="true" closable="true">
                     <p:autoUpdate/>
