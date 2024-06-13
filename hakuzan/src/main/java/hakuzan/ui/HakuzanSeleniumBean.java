@@ -72,7 +72,8 @@ public class HakuzanSeleniumBean {
             text = Files.readString(templatePath);
 
             // クラス名の置換
-            String problemName = contest + problem;
+            String problemName = url.substring(url.lastIndexOf("/") + 1);
+            problemName = problemName.replaceAll("_", "");
             problemName = problemName.toUpperCase();
             text = text.replaceAll("XXX", problemName);
 
