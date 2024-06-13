@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.primefaces.model.DefaultStreamedContent;
@@ -34,22 +35,16 @@ public class HakuzanSeleniumBean {
 
     @Getter
     @Setter
-    private String contest;
+    private String contest = "ABC";
     @Getter
     @Setter
-    private String problem;
+    private String problem = "C";
     @Getter
     @Setter
     private String text;
     @Getter
     @Setter
     private String url;
-    @Getter
-    @Setter
-    private String sourceValue;
-    @Getter
-    @Setter
-    private String targetValue;
 
     private final String TEMPLATE_FILE_PATH = "/resources/data/AtCoderTemplate.txt";
     private final String OUTPUT_FILE_PATH = "/resources/data/AtCoderOutput.java";
@@ -58,12 +53,6 @@ public class HakuzanSeleniumBean {
             = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public HakuzanSeleniumBean() {
-
-        contest = "ABC";
-        problem = "C";
-
-        url = "https://atcoder.jp/contests/";
-        url += contest.toLowerCase() + "/tasks/" + contest.toLowerCase() + "_" + problem.toLowerCase();
 
         // Primefaces.FileDownloadを参考
         // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
@@ -80,16 +69,12 @@ public class HakuzanSeleniumBean {
         try {
             // テンプレートを読み込む
             Path templatePath = Paths.get(context.getRealPath(TEMPLATE_FILE_PATH));
-            String text = Files.readString(templatePath);
+            text = Files.readString(templatePath);
 
             // クラス名の置換
             String problemName = contest + problem;
             problemName = problemName.toUpperCase();
             text = text.replaceAll("XXX", problemName);
-
-            // テストケースの置換
-            String url = "https://atcoder.jp/contests/";
-            url += contest.toLowerCase() + "/tasks/" + contest.toLowerCase() + "_" + problem.toLowerCase();
 
             driver.get(url);
 
@@ -109,13 +94,14 @@ public class HakuzanSeleniumBean {
             text = text.replaceAll("IN3", input3);
             text = text.replaceAll("OUT3", output3);
 
-            driver.quit();
-            return text;
+        } catch (NoSuchElementException e) {
+            // 古いページでテストケース3の要素がない場合もあるので、エラーとはしない
         } catch (Exception e) {
             error();
+        } finally {
             driver.quit();
         }
-        return "";
+        return text;
     }
 
     public void error() {

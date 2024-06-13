@@ -10,20 +10,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputScript target="head">
             function copyValue() {
-            var sourceInput = document.getElementById('form:sourceInput');
-            var targetInput = document.getElementById('form:targetInput');
-            var url = "https://atcoder.jp/contests/";
-            url += sourceInput.value.toLowerCase() + "/tasks/";
-
-            targetInput.value = url;
-            }
-            function copyValue2() {
             var contest = document.getElementById('form:contest');
             var problem = document.getElementById('form:problem');
             var url = document.getElementById('form:url');
 
             var t = "https://atcoder.jp/contests/";
-            t += contest.value.toLowerCase() + "_" + problem.value.toLowerCase() + "/tasks/";
+            t += contest.value.toLowerCase()
+            + "/tasks/"
+            + contest.value.toLowerCase() 
+            + "_"
+            + problem.value.toLowerCase();
 
             url.value = t;
             }
@@ -31,17 +27,6 @@
     </h:head>
     <body>
         <h:form id="form">
-            <p:panel header="PrimeFaces InputText Example" style="margin-bottom: 20px;">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="sourceInput" value="Source Input:" />
-                    <p:inputText id="sourceInput" value="#{hakuzanSeleniumBean.sourceValue}">
-                        <p:ajax event="blur" oncomplete="copyValue()" />
-                    </p:inputText>
-
-                    <h:outputLabel for="targetInput" value="Target Input:" />
-                    <p:inputText id="targetInput" value="#{hakuzanSeleniumBean.targetValue}" readonly="true" />
-                </h:panelGrid>
-            </p:panel>
             <p:panel header="AtCoder Problems Generator" style="margin-bottom: 20px;">
                 <p:panelGrid columns="2"
                              columnClasses="ui-grid-col-2,ui-grid-col-4"
@@ -49,12 +34,12 @@
                              styleClass="ui-panelgrid-blank ui-fluid"
                              style="border:0px none; background-color:transparent;">
                     <h:outputLabel for="contest" value="Contest:" />
-                    <p:inputText id="contest" value="#{hakuzanSeleniumBean.contest} " >
-                        <p:ajax event="blur" oncomplete="copyValue2()"/>
+                    <p:inputText id="contest" value="#{hakuzanSeleniumBean.contest}" >
+                        <p:ajax event="blur" oncomplete="copyValue()"/>
                     </p:inputText>
                     <h:outputLabel for="problem" value="Problem:" />
                     <p:inputText id="problem" value="#{hakuzanSeleniumBean.problem}" >
-                        <p:ajax event="blur" oncomplete="copyValue2()"/>
+                        <p:ajax event="blur" oncomplete="copyValue()"/>
                     </p:inputText>
                     <h:outputLabel for="url" value="Url:" />
                     <p:inputText id="url" value="#{hakuzanSeleniumBean.url}" />
@@ -63,15 +48,17 @@
                         <p:fileDownload value="#{hakuzanSeleniumBean.file}" />
                     </p:commandButton>
                 </p:panelGrid>
-                <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:100%">
-                    <p:autoUpdate />
-                </p:inputTextarea>
-                <div>
-                    <p:messages id="messages" showDetail="true" closable="true">
-                        <p:autoUpdate/>
-                    </p:messages>
-                </div>
+
+
             </p:panel>
+            <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:100%">
+                <p:autoUpdate />
+            </p:inputTextarea>
+            <div>
+                <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
+            </div>
         </h:form>
     </body>
 </html>
