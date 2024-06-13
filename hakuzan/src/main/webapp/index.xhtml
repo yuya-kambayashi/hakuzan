@@ -48,12 +48,10 @@
                         <p:fileDownload value="#{hakuzanSeleniumBean.file}" />
                     </p:commandButton>
                 </p:panelGrid>
-
-
+                <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:100%">
+                    <p:autoUpdate />
+                </p:inputTextarea>
             </p:panel>
-            <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:100%">
-                <p:autoUpdate />
-            </p:inputTextarea>
             <div>
                 <p:messages id="messages" showDetail="true" closable="true">
                     <p:autoUpdate/>
