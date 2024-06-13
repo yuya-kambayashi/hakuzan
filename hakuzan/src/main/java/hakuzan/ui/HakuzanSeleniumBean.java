@@ -67,7 +67,7 @@ public class HakuzanSeleniumBean {
     public String generateCode() throws IOException {
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         WebDriver driver = new ChromeDriver(options);
 
         try {
