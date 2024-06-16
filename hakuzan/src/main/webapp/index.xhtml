@@ -44,9 +44,7 @@
                     <h:outputLabel for="url" value="Url:" />
                     <p:inputText id="url" value="#{hakuzanSeleniumBean.url}" />
                     <h:outputLabel for="btnOutputCode" value="" />
-                    <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}" style="width:auto">
-                        <p:fileDownload value="#{hakuzanSeleniumBean.file}" />
-                    </p:commandButton>
+                    <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}" style="width:auto"/>
                 </p:panelGrid>
                 <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:100%">
                     <p:autoUpdate />

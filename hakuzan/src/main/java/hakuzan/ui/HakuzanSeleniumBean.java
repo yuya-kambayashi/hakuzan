@@ -32,9 +32,6 @@ import org.primefaces.model.StreamedContent;
 public class HakuzanSeleniumBean {
 
     @Getter
-    private StreamedContent file;
-
-    @Getter
     @Setter
     private String contest = "ABC";
     @Getter
@@ -54,14 +51,6 @@ public class HakuzanSeleniumBean {
             = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public HakuzanSeleniumBean() {
-
-        // Primefaces.FileDownloadを参考
-        // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
-        file = DefaultStreamedContent.builder()
-                .name("output.txt")
-                .contentType("text/plain")
-                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(OUTPUT_FILE_PATH))
-                .build();
     }
 
     public String generateCode() throws IOException {
