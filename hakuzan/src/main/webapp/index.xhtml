@@ -29,7 +29,7 @@
         <h:form id="form">
             <p:panel id="pnl" header="AtCoder Problems Generator" style="margin-bottom: 20px;">
                 <p:panelGrid columns="2"
-                             columnClasses="ui-grid-col-2,ui-grid-col-4"
+                             columnClasses="ui-grid-col-2,ui-grid-col-2"
                              layout="grid"
                              styleClass="ui-panelgrid-blank ui-fluid"
                              style="border:0px none; background-color:transparent;">
@@ -41,7 +41,13 @@
                     <p:inputText id="problem" value="#{hakuzanSeleniumBean.problem}" >
                         <p:ajax event="blur" oncomplete="copyValue()"/>
                     </p:inputText>
-                    <h:outputLabel for="url" value="Url:" />
+                </p:panelGrid>         
+                <p:panelGrid columns="2"
+                             columnClasses="ui-grid-col-2,ui-grid-col-8"
+                             layout="grid"
+                             styleClass="ui-panelgrid-blank ui-fluid"
+                             style="border:0px none; background-color:transparent;">
+                    <h:outputLabel for="url" value="URL:" />
                     <p:inputText id="url" value="#{hakuzanSeleniumBean.url}" />
                     <h:outputLabel for="btnOutputCode" value="" />
                     <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}" style="width:auto"/>
