@@ -88,6 +88,12 @@ public class HakuzanSeleniumBean {
             text = text.replaceAll("IN3", input3);
             text = text.replaceAll("OUT3", output3);
 
+            var input4 = driver.findElement(By.id("pre-sample6")).getText();
+            var output4 = driver.findElement(By.id("pre-sample7")).getText();
+            // テストケース3がない場合もテンプレートに埋め込んだキーワードを削除する意味合いで置換する
+            text = text.replaceAll("IN4", input4);
+            text = text.replaceAll("OUT4", output4);
+
         } catch (NoSuchElementException e) {
             // 古いページでテストケース3の要素がない場合もあるので、エラーとはしない
         } catch (Exception e) {
