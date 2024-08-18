@@ -38,6 +38,8 @@ public class HakuzanSeleniumBean {
     @Setter
     private String problem = "C";
     @Getter
+    private StreamedContent file;
+    @Getter
     @Setter
     private String text;
     @Getter
@@ -51,6 +53,16 @@ public class HakuzanSeleniumBean {
             = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
     public HakuzanSeleniumBean() {
+
+        String filenName = contest + problem;
+
+        // Primefaces.FileDownloadを参考
+        // http://www.primefaces.org:8080/showcase/ui/file/download.xhtml?jfwid=50bd1
+        file = DefaultStreamedContent.builder()
+                .name("output.txt")
+                .contentType("text/plain")
+                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(OUTPUT_FILE_PATH))
+                .build();
     }
 
     public String generateCode() throws IOException {
