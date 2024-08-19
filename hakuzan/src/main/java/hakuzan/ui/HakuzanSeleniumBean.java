@@ -9,10 +9,15 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.servlet.ServletContext;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
@@ -38,7 +43,7 @@ public class HakuzanSeleniumBean {
     @Setter
     private String problem = "C";
     @Getter
-    private StreamedContent file;
+    final private StreamedContent file;
     @Getter
     @Setter
     private String text;
@@ -123,6 +128,14 @@ public class HakuzanSeleniumBean {
 
     public void outputCode() throws IOException {
 
+        // 出力ファイルと同名ファイルが存在する場合は上書きする
+        String downdload = "C:\\Users\\kamba\\Downloads\\";
+        String from = "output.txt";
+        File f = new File(downdload + from);
+        if (f.exists()) {
+            f.delete();
+        }
+
         // 書き込み文字列の生成
         text = "";
         text = generateCode();
@@ -137,6 +150,40 @@ public class HakuzanSeleniumBean {
 
             int a = 0;
             //Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void rename() throws IOException {
+        // https://tech.kurojica.com/archives/5652/
+        //String batchPath = "C:\\Users\\kamba\\Downloads\\test\\rename2.bat";
+        String batchPath = "C:\\Users\\kamba\\Downloads\\test\\rename3.bat";
+        String downdload = "C:\\Users\\kamba\\Downloads\\";
+        String from = "output.txt";
+        String to = contest + problem + ".java";
+
+        // すでに同名ファイルが存在する場合は上書きする
+        File f = new File(downdload + to);
+        if (f.exists()) {
+            f.delete();
+        }
+
+        batchPath += " " + downdload + from + " " + to;
+
+        int processCompleted = -1;
+
+        try {
+            Process runtimeProcess = Runtime.getRuntime().exec(batchPath);
+
+//            processCompleted = runtimeProcess.waitFor();
+//            BufferedReader br = new BufferedReader(new InputStreamReader(
+//                    runtimeProcess.getErrorStream()));
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                System.out.printf(line);
+//            }
+            int bb = 0;
+        } catch (Exception ex) {
+            int a = 0;
         }
     }
 }
