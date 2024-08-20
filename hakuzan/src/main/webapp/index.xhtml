@@ -50,10 +50,10 @@
                     <h:outputLabel for="url" value="URL:" />
                     <p:inputText id="url" value="#{hakuzanSeleniumBean.url}" />
                     <h:outputLabel for="btnOutputCode" value="" />
-                    <p:commandButton id="btnOutputCode" value="Output Code" action="#{hakuzanSeleniumBean.outputCode()}" style="width:auto">
+                    <p:commandButton ajax="false" id="btnOutputCode" value="Output Code" actionListener="#{hakuzanSeleniumBean.outputCode()}" style="width:auto">
                         <p:fileDownload value="#{hakuzanSeleniumBean.file}" />
+                        <f:actionListener binding="#{hakuzanSeleniumBean.rename()}"/>
                     </p:commandButton>
-                    <p:commandButton id="btnRename" value="Rename" action="#{hakuzanSeleniumBean.rename()}" style="width:auto"/>
                 </p:panelGrid>
                 <p:inputTextarea id="textArea" value="#{hakuzanSeleniumBean.text}" style="width:100%">
                     <p:autoUpdate />

@@ -158,7 +158,7 @@ public class HakuzanSeleniumBean {
         //String batchPath = "C:\\Users\\kamba\\Downloads\\test\\rename2.bat";
         String batchPath = "C:\\Users\\kamba\\Downloads\\test\\rename3.bat";
         String downdload = "C:\\Users\\kamba\\Downloads\\";
-        String from = "output.txt";
+        String from = "output.txt.crdownload";
         String to = contest + problem + ".java";
 
         // すでに同名ファイルが存在する場合は上書きする
