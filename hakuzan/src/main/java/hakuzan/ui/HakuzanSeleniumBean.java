@@ -41,7 +41,7 @@ public class HakuzanSeleniumBean {
     private String contest = "ABC";
     @Getter
     @Setter
-    private String problem = "C";
+    private String problem = "D";
     @Getter
     final private StreamedContent file;
     @Getter
