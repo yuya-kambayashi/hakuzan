@@ -17,8 +17,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}     
           username: ${{ secrets.FTP_USERNAME }} 
           password: ${{ secrets.FTP_PASSWORD }} 
-          local-dir: ローカルディレクトリ
-          server-dir: サーバーディレクトリ
+          local-dir: ./hakuzan/src/
+          server-dir: ./hakuzan/src/
           exclude: |
             **/.git*
             **/.git*/**
