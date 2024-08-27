@@ -43,5 +43,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: my-artifact
-        path: target/hakuzan.war
+        path: /home/runner/work/hakuzan/hakuzan/hakuzan/target/hakuzan.war
 
