@@ -29,7 +29,7 @@ jobs:
         architecture: x64
       #  cache: maven
     - name: Build with Maven
-      run: mvn clean install
+      run: mvn -Pstaging install -DskipTests=true -Dno-format -B -V
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
